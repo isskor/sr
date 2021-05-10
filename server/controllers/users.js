@@ -126,11 +126,13 @@ exports.removeFromFavorite = async (req, res) => {
 };
 
 exports.getFavorites = async (req, res) => {
+  console.log('fav');
   const { id } = req.user;
   console.log(id);
   const channels = await db('favoriteChannels').where({ userId: id });
   const programs = await db('favoritePrograms').where({ userId: id });
   const episodes = await db('favoriteEpisodes').where({ userId: id });
+  console.log('episodes', programs);
 
   let channelArr = await Promise.all(
     channels.map((c) =>
@@ -138,7 +140,7 @@ exports.getFavorites = async (req, res) => {
         .get(`http://api.sr.se/api/v2/channels/${c.channelId}?${json} `)
         .then((res) => res.data.channel)
         .catch((err) => {
-          console.log(err);
+          console.log('error channel', err);
         })
     )
   );
@@ -149,7 +151,7 @@ exports.getFavorites = async (req, res) => {
         .get(`http://api.sr.se/api/v2/programs/${p.programId}?${json} `)
         .then((res) => res.data.program)
         .catch((err) => {
-          console.log(err);
+          console.log('error program', err);
         })
     )
   );
@@ -160,8 +162,9 @@ exports.getFavorites = async (req, res) => {
         (e) => e.episodeId
       )}&${json}`
     )
-    .then((res) => res.data.episodes);
-  console.log(programArr);
+    .then((res) => res.data.episodes)
+    .catch((err) => console.log('err ep', err.message));
+  console.log('episode', episodeArr);
 
   res.json({
     channels: channelArr,
