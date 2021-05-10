@@ -27,10 +27,6 @@ const Home = () => {
           <div className='a'>
             <h1>Immersive Radio</h1>
             <h2>Listen to your favorite Channels or Programs</h2>
-            <img
-              src='https://res.cloudinary.com/sweden/image/upload/v1619772165/Artboard_1_u2wuht.png'
-              alt='4 padel rackets'
-            />
             <div className='btn_container'>
               <Link to='/register'>Register</Link>
               <Link to='/channels'>Browse And Listen</Link>

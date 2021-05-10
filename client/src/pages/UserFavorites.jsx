@@ -57,7 +57,7 @@ const UserFavorites = ({ history, match }) => {
       </StyledChannelNav>
       <StyledFavList className='list'>
         {favorites &&
-          favorites[list].map((fav) => {
+          favorites[list]?.map((fav) => {
             if (list === 'channels')
               return <ChannelCard channel={fav} key={fav.id} />;
             if (list === 'programs')
